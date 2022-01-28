@@ -15,13 +15,9 @@ const Login = props => {
 	const submitHandler = data => {
 		// navigate('/')
 		const { loginName, loginPass } = data
-		console.log(loginName, loginPass, 'DATA')
 	}
 	return (
-		<form
-			className='form form_login'
-			onSubmit={handleSubmit(submitHandler)}
-		>
+		<form className='form form_login' onSubmit={handleSubmit(submitHandler)}>
 			<h3 className='form-title'>Вход</h3>
 			{loginConfig.map((item, index) => (
 				<InputItem

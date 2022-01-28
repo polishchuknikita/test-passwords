@@ -35,15 +35,16 @@ const Panel = props => {
 				  }
 				: item
 		)
-		console.log(newUsersArr, 'newUsersArr')
-		localStorage.setItem('users', JSON.stringify(newUsersArr))
-		setAccountsPasswords(prevState => [
-			...prevState,
-			{
-				name: passLogin,
-				password: passPass,
-			},
-		])
+		if (newUsersArr) {
+			localStorage.setItem('users', JSON.stringify(newUsersArr))
+			setAccountsPasswords(prevState => [
+				...prevState,
+				{
+					name: passLogin,
+					password: passPass,
+				},
+			])
+		}
 	}
 
 	const deletePass = inputId => {
@@ -53,11 +54,6 @@ const Panel = props => {
 	}
 
 	useEffect(() => {
-		console.log(users, 'users?')
-	}, [users])
-	useEffect(() => {
-		console.log(accountsPasswords, 'accountsPasswords')
-
 		const newUsersArr = usersLS?.map((item, index) =>
 			index === 0
 				? {
@@ -66,7 +62,9 @@ const Panel = props => {
 				  }
 				: item
 		)
-		localStorage.setItem('users', JSON.stringify(newUsersArr))
+		if (newUsersArr) {
+			localStorage.setItem('users', JSON.stringify(newUsersArr))
+		}
 	}, [accountsPasswords])
 	return (
 		<div className='panel'>

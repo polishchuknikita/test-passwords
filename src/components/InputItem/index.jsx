@@ -1,7 +1,7 @@
 import React from 'react'
 
 const InputItem = props => {
-	const { inputType, inputId, inputPlaceholder, register, onFocus } = props
+	const { inputType, inputId, inputPlaceholder, register } = props
 
 	return (
 		<input
@@ -10,8 +10,6 @@ const InputItem = props => {
 			placeholder={inputPlaceholder}
 			{...register(inputId)}
 			className='input'
-			onFocus={onFocus(true)}
-			onBlur={onFocus(false)}
 		/>
 	)
 }

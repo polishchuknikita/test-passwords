@@ -14,38 +14,38 @@ const PasswordItem = props => {
 		formState: { errors, isDirty },
 	} = useForm()
 
-	useEffect(() => {
-		console.log(isFocusedInput, 'FOCUS')
-		console.log(
-			isFocusedInput ? password : password.replace(/./gm, '*'),
-			'FOCUS'
+	const submitForm = data => {
+		const usersLS = JSON.parse(localStorage.getItem('users'))
+		const newArrUsersPassword = usersLS[0].userAccounts.map((item, index) => {
+			for (const [key, value] of Object.entries(data)) {
+				if (key == item.name) {
+					return {
+						...item,
+						password: value,
+					}
+				} else {
+					return item
+				}
+			}
+		})
+		localStorage.setItem(
+			'users',
+			JSON.stringify([{ ...usersLS[0], userAccounts: newArrUsersPassword }])
 		)
-	}, [isFocusedInput])
-	// const { ref, ...rest } = register(inputId)
-	// const refInput = ref()
-
-	// const refElement = el => {
-	// 	refInput.current = el
-	// }
-	// console.log(register(inputId).ref(), 'reg')
+	}
 
 	return (
-		<form className='password-item' onSubmit={handleSubmit()}>
+		<form className='password-item' onSubmit={handleSubmit(submitForm)}>
 			<div className='password-item__title'>
-				<span className='password-item__name-label'>
-					Логин учетной записи
-				</span>
+				<span className='password-item__name-label'>Логин учетной записи</span>
 				<span className='password-item__name'>{name}</span>
 			</div>
 			<div className='password-item__pass'>
-				<span className='password-item__pass-label'>
-					Пароль учетной записи
-				</span>
+				<span className='password-item__pass-label'>Пароль учетной записи</span>
 				<input
 					ref={register}
-					type={'text'}
+					type={isFocusedInput ? 'text' : 'password'}
 					id={inputId}
-					// {...rest}
 					{...register(inputId)}
 					className='input'
 					onFocus={() => {
@@ -53,16 +53,8 @@ const PasswordItem = props => {
 						setValue(password)
 					}}
 					onBlur={() => setIsFocusedInput(false)}
-					defaultValue={
-						isFocusedInput ? password : password.replace(/./gm, '*')
-					}
+					defaultValue={password}
 				/>
-				{/* <InputItem
-					inputType={'text'}
-					inputId={inputId}
-					register={register}
-					onFocus={setIsFocusedInput}
-				/> */}
 			</div>
 			<button className='btn btn_pass-item'>Сохранить изменения</button>
 			<button

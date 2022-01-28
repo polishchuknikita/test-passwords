@@ -14,7 +14,6 @@ const Reg = props => {
 	} = useForm()
 	const submitHandler = data => {
 		const { regName, regPass } = data
-		console.log(data, 'DATA')
 
 		const usersLS = localStorage.getItem('users')
 		if (!usersLS) {
